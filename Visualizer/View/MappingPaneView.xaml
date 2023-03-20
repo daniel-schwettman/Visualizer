@@ -1,0 +1,173 @@
+﻿<UserControl x:Class="Visualizer.View.MappingPaneView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Visualizer.View"
+             xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+             xmlns:m="clr-namespace:Microsoft.Maps.MapControl.WPF;assembly=Microsoft.Maps.MapControl.WPF"
+             mc:Ignorable="d" 
+			 Loaded="Map_Loaded">
+    <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="BoolToVisConverter"/>
+    </UserControl.Resources>
+    <ScrollViewer>
+
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition ColumnDefinition.Width="*" />
+                <ColumnDefinition ColumnDefinition.Width="1.5*" />
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Column="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition RowDefinition.Height="60" />
+                    <RowDefinition RowDefinition.Height="8*" />
+                </Grid.RowDefinitions>
+                <StackPanel Grid.Row="0" Grid.ColumnSpan="2" Orientation="Vertical" Margin="0,0,0,0">
+                    <StackPanel Orientation="Horizontal" Margin="0,0,0,0">
+                        <CheckBox FontSize="17" Margin="11,30,0,0" IsChecked="{Binding IsGeoMappingEnabled, UpdateSourceTrigger=PropertyChanged}" ToolTipService.ShowDuration="12000">
+                            <CheckBox.ToolTip>
+                                <ToolTip Visibility="{Binding ShowToolTips, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource BooleanToVisibilityConverter}}" 
+                             Content="When enabled, show all tags within the selected range of a selected tag." StaysOpen="True"/>
+                            </CheckBox.ToolTip>
+                            <TextBlock Text="Enable Geomapping" Margin="3,0,0,0"/>
+                        </CheckBox>
+                        <telerik:RadComboBox Margin="20,30,0,0" Width="85" Height="20" Visibility="{Binding IsGeoMappingEnabled, Converter={StaticResource BoolToVisConverter}, UpdateSourceTrigger=PropertyChanged}"
+                              ItemsSource="{Binding GeoMappingDistances}" SelectedItem="{Binding SelectedGeoMappingDistance, UpdateSourceTrigger=PropertyChanged}" ToolTipService.ShowDuration="12000">
+                            <telerik:RadComboBox.ToolTip>
+                                <ToolTip Visibility="{Binding ShowToolTips, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource BooleanToVisibilityConverter}}" 
+                             Content="The range used for geomapping tags near the selected tag." StaysOpen="True"/>
+                            </telerik:RadComboBox.ToolTip>
+                        </telerik:RadComboBox>
+                    </StackPanel>
+                </StackPanel>
+                <telerik:RadTabControl Grid.Row="1" SelectedIndex="{Binding SelectedTabIndex}">
+                    <telerik:RadTabItem Header="Current Tags">
+                        <StackPanel Orientation="Vertical">
+                            <telerik:RadGridView x:Name="TagGridView" ItemsSource="{Binding Tags, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding SelectedTag}" FrozenColumnsSplitterVisibility="Hidden"  IsSynchronizedWithCurrentItem="False" AutoGenerateColumns="False"
+                             RowIndicatorVisibility="Collapsed" Margin="10" FontSize="16" AlternationCount="2" MaxHeight="500"
+                             SelectionMode="Extended" IsPropertyChangedAggregationEnabled="False" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto"
+                             IsReadOnly="True" Grid.Row="1" SelectionChanged="TagGridView_SelectionChanged" Filtered="TagGridView_Filtered"
+                             telerik:PersistenceManager.StorageId="currentTagGrid">
+                                <telerik:RadGridView.ContextMenu>
+                                    <ContextMenu>
+                                        <MenuItem Header="Reports" Margin="10,0,0,0" Foreground="Black">
+                                            <MenuItem Header="Filtered Report" Click="CurrentTagsReportButton_Click" Margin="10,0,0,0" Foreground="Black"/>
+                                            <MenuItem Header="Selected Report" Command="{Binding GenerateCurrentTagReportCommand}" Margin="10,0,0,0" Foreground="Black"/>
+                                        </MenuItem>
+                                    </ContextMenu>
+                                </telerik:RadGridView.ContextMenu>
+                                <telerik:RadGridView.Columns>
+                                    <telerik:GridViewDataColumn DataMemberBinding="{Binding Id, UpdateSourceTrigger=PropertyChanged}" Header="ID" Width="150"/>
+                                    <telerik:GridViewDataColumn DataMemberBinding="{Binding Name, UpdateSourceTrigger=PropertyChanged}" Header="Name" Width="150"/>
+                                    <telerik:GridViewDataColumn DataMemberBinding="{Binding LastUpdatedOnServer, UpdateSourceTrigger=PropertyChanged}" Header="Updated On Server" Width="200"/>
+                                    <telerik:GridViewDataColumn DataMemberBinding="{Binding Longitude, UpdateSourceTrigger=PropertyChanged}" Header="Longitude" Width="120"/>
+                                    <telerik:GridViewDataColumn DataMemberBinding="{Binding Latitude, UpdateSourceTrigger=PropertyChanged}" Header="Latitude" Width="120"/>
+                                    <telerik:GridViewDataColumn DataMemberBinding="{Binding MZone1Rssi, UpdateSourceTrigger=PropertyChanged}" Header="Rssi" Width="70"/>
+                                    <telerik:GridViewDataColumn DataMemberBinding="{Binding ReaderId, UpdateSourceTrigger=PropertyChanged}" Header="Reader Id" Width="140"/>
+                                </telerik:RadGridView.Columns>
+                            </telerik:RadGridView>
+                            <telerik:RadGridView x:Name="TagGridView2" ItemsSource="{Binding GeoMappedTags}" SelectedItem="{Binding SelectedMappedTag}" IsReadOnly="True" Grid.Row="2"
+                                      Visibility="{Binding IsGeoMappingEnabled, Converter={StaticResource BoolToVisConverter}, UpdateSourceTrigger=PropertyChanged}"
+                                      FrozenColumnsSplitterVisibility="Hidden"  IsSynchronizedWithCurrentItem="False" AutoGenerateColumns="False"
+                                      RowIndicatorVisibility="Collapsed" Margin="10" FontSize="16" AlternationCount="2" MaxHeight="320"
+                                 SelectionChanged="TagGridView2_SelectionChanged" Filtered="TagGridView2_Filtered"
+                             IsPropertyChangedAggregationEnabled="False" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto">
+                                <telerik:RadGridView.Columns>
+                                    <telerik:GridViewDataColumn DataMemberBinding="{Binding Id, UpdateSourceTrigger=PropertyChanged}" Header="ID" Width="150"/>
+                                    <telerik:GridViewDataColumn DataMemberBinding="{Binding Name, UpdateSourceTrigger=PropertyChanged}" Header="Name" Width="150"/>
+                                    <telerik:GridViewDataColumn DataMemberBinding="{Binding LastUpdatedOnServer, UpdateSourceTrigger=PropertyChanged}" Header="Updated On Server" Width="200"/>
+                                    <telerik:GridViewDataColumn DataMemberBinding="{Binding Longitude, UpdateSourceTrigger=PropertyChanged}" Header="Longitude" Width="120"/>
+                                    <telerik:GridViewDataColumn DataMemberBinding="{Binding Latitude, UpdateSourceTrigger=PropertyChanged}" Header="Latitude" Width="120"/>
+                                    <telerik:GridViewDataColumn DataMemberBinding="{Binding MZone1Rssi, UpdateSourceTrigger=PropertyChanged}" Header="Rssi" Width="70"/>
+                                    <telerik:GridViewDataColumn DataMemberBinding="{Binding ReaderId, UpdateSourceTrigger=PropertyChanged}" Header="Reader Id" Width="140"/>
+                                </telerik:RadGridView.Columns>
+                            </telerik:RadGridView>
+                        </StackPanel>
+                    </telerik:RadTabItem>
+                    <telerik:RadTabItem Header="Tag History">
+                        <StackPanel Orientation="Vertical">
+                            <telerik:RadGridView x:Name="TagHistoryGridView" ItemsSource="{Binding HistoryTags, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding SelectedHistoryTag}" FrozenColumnsSplitterVisibility="Hidden"  IsSynchronizedWithCurrentItem="False" AutoGenerateColumns="False"
+                             RowIndicatorVisibility="Collapsed" Margin="10" FontSize="16" AlternationCount="2" MaxHeight="500"
+                                             telerik:PersistenceManager.StorageId="tagHistoryGrid"
+                             SelectionMode="Extended" IsPropertyChangedAggregationEnabled="False" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto"
+                             IsReadOnly="True" Grid.Row="1" SelectionChanged="TagHistoryGridView_SelectionChanged" Filtered="TagHistoryGridView_Filtered">
+                                <telerik:RadGridView.Columns>
+                                    <telerik:GridViewDataColumn DataMemberBinding="{Binding Id, UpdateSourceTrigger=PropertyChanged}" Header="ID" Width="150"/>
+                                    <telerik:GridViewDataColumn DataMemberBinding="{Binding Name, UpdateSourceTrigger=PropertyChanged}" Header="Name" Width="150"/>
+                                    <telerik:GridViewDataColumn DataMemberBinding="{Binding LastUpdatedOnServer, UpdateSourceTrigger=PropertyChanged}" Header="Updated On Server" Width="200"/>
+                                    <telerik:GridViewDataColumn DataMemberBinding="{Binding Longitude, UpdateSourceTrigger=PropertyChanged}" Header="Longitude" Width="120"/>
+                                    <telerik:GridViewDataColumn DataMemberBinding="{Binding Latitude, UpdateSourceTrigger=PropertyChanged}" Header="Latitude" Width="120"/>
+                                    <telerik:GridViewDataColumn DataMemberBinding="{Binding MZone1Rssi, UpdateSourceTrigger=PropertyChanged}" Header="Rssi" Width="70"/>
+                                    <telerik:GridViewDataColumn DataMemberBinding="{Binding ReaderId, UpdateSourceTrigger=PropertyChanged}" Header="Reader Id" Width="140"/>
+                                    <telerik:GridViewDataColumn DataMemberBinding="{Binding MZone1, UpdateSourceTrigger=PropertyChanged}" Header="Current MicroZone" Width="140"/>
+                                    <telerik:GridViewDataColumn DataMemberBinding="{Binding MZone2, UpdateSourceTrigger=PropertyChanged}" Header="Previous MicroZone" Width="140"/>
+                                </telerik:RadGridView.Columns>
+                                <telerik:RadGridView.ContextMenu>
+                                    <ContextMenu>
+                                        <MenuItem Header="Reports" Margin="10,0,0,0" Foreground="Black">
+                                            <MenuItem Header="Filtered Report" Click="TagHistoryReportButton_Click" Margin="10,0,0,0" Foreground="Black"/>
+                                            <MenuItem Header="Selected Report" Command="{Binding GenerateTagHistoryReportCommand}" Margin="10,0,0,0" Foreground="Black"/>
+                                        </MenuItem>
+                                    </ContextMenu>
+                                </telerik:RadGridView.ContextMenu>
+                            </telerik:RadGridView>
+                            <telerik:RadGridView x:Name="TagHistoryGridView2" ItemsSource="{Binding GeoMappedHistoryTags}" SelectedItem="{Binding SelectedMappedHistoryTag}" IsReadOnly="True" Grid.Row="2"
+                                      Visibility="{Binding IsGeoMappingEnabled, Converter={StaticResource BoolToVisConverter}, UpdateSourceTrigger=PropertyChanged}"
+                                      FrozenColumnsSplitterVisibility="Hidden"  IsSynchronizedWithCurrentItem="False" AutoGenerateColumns="False" MaxHeight="320"
+                                      RowIndicatorVisibility="Collapsed" Margin="10" FontSize="16" AlternationCount="2"
+                                 SelectionChanged="TagHistoryGridView2_SelectionChanged" Filtered="TagHistoryGridView2_Filtered"
+                             IsPropertyChangedAggregationEnabled="False" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto">
+                                <telerik:RadGridView.Columns>
+                                    <telerik:GridViewDataColumn DataMemberBinding="{Binding Id, UpdateSourceTrigger=PropertyChanged}" Header="ID" Width="150"/>
+                                    <telerik:GridViewDataColumn DataMemberBinding="{Binding Name, UpdateSourceTrigger=PropertyChanged}" Header="Name" Width="150"/>
+                                    <telerik:GridViewDataColumn DataMemberBinding="{Binding LastUpdatedOnServer, UpdateSourceTrigger=PropertyChanged}" Header="Updated On Server" Width="200"/>
+                                    <telerik:GridViewDataColumn DataMemberBinding="{Binding Longitude, UpdateSourceTrigger=PropertyChanged}" Header="Longitude" Width="120"/>
+                                    <telerik:GridViewDataColumn DataMemberBinding="{Binding Latitude, UpdateSourceTrigger=PropertyChanged}" Header="Latitude" Width="120"/>
+                                    <telerik:GridViewDataColumn DataMemberBinding="{Binding MZone1Rssi, UpdateSourceTrigger=PropertyChanged}" Header="Rssi" Width="70"/>
+                                    <telerik:GridViewDataColumn DataMemberBinding="{Binding ReaderId, UpdateSourceTrigger=PropertyChanged}" Header="Reader Id" Width="140"/>
+                                    <telerik:GridViewDataColumn DataMemberBinding="{Binding MZone1Name, UpdateSourceTrigger=PropertyChanged}" Header="Current MicroZone" Width="140"/>
+                                    <telerik:GridViewDataColumn DataMemberBinding="{Binding MZone2Name, UpdateSourceTrigger=PropertyChanged}" Header="Previous MicroZone" Width="140"/>
+                                </telerik:RadGridView.Columns>
+                            </telerik:RadGridView>
+                        </StackPanel>
+                    </telerik:RadTabItem>
+                    <telerik:RadTabItem Header="Assets">
+                        <StackPanel Orientation="Vertical">
+                            <telerik:RadGridView x:Name="AssetGridView" ItemsSource="{Binding Assets, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding SelectedAsset}" FrozenColumnsSplitterVisibility="Hidden"  IsSynchronizedWithCurrentItem="False" AutoGenerateColumns="False"
+                             RowIndicatorVisibility="Collapsed" Margin="10" FontSize="16" AlternationCount="2" MaxHeight="500"
+                             SelectionMode="Extended" IsPropertyChangedAggregationEnabled="False" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto"
+                             IsReadOnly="True" Grid.Row="1" SelectionChanged="AssetGridView_SelectionChanged" Filtered="AssetGridView_Filtered">
+                                <telerik:RadGridView.Columns>
+                                    <telerik:GridViewDataColumn DataMemberBinding="{Binding AssetId, UpdateSourceTrigger=PropertyChanged}" Header="ID" Width="150"/>
+                                    <telerik:GridViewDataColumn DataMemberBinding="{Binding Name, UpdateSourceTrigger=PropertyChanged}" Header="Name" Width="200"/>
+                                    <telerik:GridViewDataColumn DataMemberBinding="{Binding IsActive, UpdateSourceTrigger=PropertyChanged}" Header="Is Active" Width="100"/>
+                                    <telerik:GridViewDataColumn DataMemberBinding="{Binding AssetIdentifier, UpdateSourceTrigger=PropertyChanged}" Header="Asset Identifier" Width="200"/>
+                                </telerik:RadGridView.Columns>
+                            </telerik:RadGridView>
+                        </StackPanel>
+                    </telerik:RadTabItem>
+                </telerik:RadTabControl>
+            </Grid>
+            <Grid Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <Grid Grid.Row="0" VerticalAlignment="Center">
+                    <Grid.Resources>
+                        <Style Style.TargetType="{x:Type TextBlock}">
+                            <Style.Setters>
+                                <Setter Property="VerticalAlignment" Value="Center"/>
+                                <Setter Property="FontSize" Value="16" />
+                                <Setter Property="Foreground" Value="#FF000000" />
+                            </Style.Setters>
+                        </Style>
+                    </Grid.Resources>
+                </Grid>
+                <Border Grid.Row="0" Margin="0,70,10,10" BorderBrush="Black" BorderThickness="1">
+                    <m:Map Name="MapView" CredentialsProvider="AsSN9EZQPu2jmToMf1e-nu691OHhxEzcdG7zaVEB8tQthLtvOTpXV-MNYUwprjWQ" ZoomLevel="{Binding ZoomLevel, Mode=TwoWay}" />
+                </Border>
+            </Grid>
+        </Grid>
+    </ScrollViewer>
+</UserControl>

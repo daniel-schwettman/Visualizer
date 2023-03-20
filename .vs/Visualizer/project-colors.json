@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "ProjectMap": {
+    "edd0953b-308d-4f11-9cea-37fa75c61320": {
+      "ProjectGuid": "edd0953b-308d-4f11-9cea-37fa75c61320",
+      "DisplayName": "Visualizer",
+      "ColorIndex": 0
+    }
+  },
+  "NextColorIndex": 1
+}

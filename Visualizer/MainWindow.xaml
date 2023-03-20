@@ -1,0 +1,89 @@
+﻿<telerik:RadWindow x:Class="Visualizer.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:Util="clr-namespace:Visualizer.Util"
+        xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+        xmlns:navigation="clr-namespace:Telerik.Windows.Controls.Navigation;assembly=Telerik.Windows.Controls.Navigation"
+        navigation:RadWindowInteropHelper.Title="LocOn"
+        navigation:RadWindowInteropHelper.ShowInTaskbar="True">
+    <telerik:RadWindow.Resources>
+        <BooleanToVisibilityConverter x:Key="BoolToVisConverter"/>
+    </telerik:RadWindow.Resources>
+    <telerik:RadWindow.Header>
+        <TextBlock Text="LocOn" FontStyle="Italic" FontWeight="Medium" HorizontalAlignment="Center" FontSize="18" Foreground="White"/>
+    </telerik:RadWindow.Header>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+        </StackPanel>
+        <telerik:RadNavigationView Grid.Row="1" x:Name="C" AutoChangeDisplayMode="False" DisplayMode="Compact" FlowDirection="LeftToRight">
+            <telerik:RadNavigationView.PaneFooter>
+                <telerik:RadNavigationViewItem Content="Application Settings" FontSize="18"  FontFamily="Segoe UI" Padding="10,-3,0,0" Command="{Binding ShowApplicationSettingsPaneCommand}" Click="RadNavigationViewItem_Click">
+                    <telerik:RadNavigationViewItem.Icon>
+                        <telerik:RadGlyph Glyph="&#xe13b;" FontSize="25"/>
+                    </telerik:RadNavigationViewItem.Icon>
+                </telerik:RadNavigationViewItem>
+            </telerik:RadNavigationView.PaneFooter>
+            <telerik:RadNavigationView.Items>
+                <!--<telerik:RadNavigationViewItem Content="Daily" FontSize="18" FontFamily="Segoe UI" Padding="10,-1,0,0" 
+                                                Margin="0,5,0,0" Command="{Binding ShowDailyPaneCommand}" Click="RadNavigationViewItem_Click">
+                    <telerik:RadNavigationViewItem.Icon>
+                        <telerik:RadGlyph Glyph="&#xe108;" FontSize="20"/>
+                    </telerik:RadNavigationViewItem.Icon>
+                </telerik:RadNavigationViewItem>-->
+                <telerik:RadNavigationViewItem Content="Dashboard" FontSize="18" FontFamily="Segoe UI" Padding="10,-1,0,0" 
+                                                Margin="0,5,0,0" Command="{Binding ShowSystemReportingPaneCommand}" Click="RadNavigationViewItem_Click"  Visibility="{Binding IsReportingEnabled, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource BoolToVisConverter}}">
+                    <telerik:RadNavigationViewItem.Icon>
+                        <telerik:RadGlyph Glyph="&#xe921;" FontSize="25"/>
+                    </telerik:RadNavigationViewItem.Icon>
+                </telerik:RadNavigationViewItem>
+                <telerik:RadNavigationViewItem Content="Inventory Management" Command="{Binding ShowInventoryManagementPaneCommand}" FontSize="18" FontFamily="Segoe UI" Padding="10,2,0,0" 
+                                               Margin="0,5,0,0" Click="RadNavigationViewItem_Click"  Visibility="{Binding IsInventoryEnabled, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource BoolToVisConverter}}">
+                    <telerik:RadNavigationViewItem.Icon>
+                        <telerik:RadGlyph Glyph="&#xe64a;" FontSize="23" Margin="2,0,0,0"/>
+                    </telerik:RadNavigationViewItem.Icon>
+                </telerik:RadNavigationViewItem>
+                <telerik:RadNavigationViewItem Content="Asset Management" Command="{Binding ShowAssetManagementPaneCommand}" FontSize="18" FontFamily="Segoe UI" Padding="10,2,0,0" 
+                                               Margin="0,5,0,0" Click="RadNavigationViewItem_Click"  Visibility="{Binding IsAssetEnabled, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource BoolToVisConverter}}">
+                    <telerik:RadNavigationViewItem.Icon>
+                        <telerik:RadGlyph Glyph="&#xe606;" FontSize="23" Margin="2,0,0,0"/>
+                    </telerik:RadNavigationViewItem.Icon>
+                </telerik:RadNavigationViewItem>
+                <telerik:RadNavigationViewItem Content="Mapping" Command="{Binding ShowMappingPaneCommand}" FontSize="18" FontFamily="Segoe UI" Padding="10,2,0,0" 
+                                                Margin="0,5,0,0" Click="RadNavigationViewItem_Click" Visibility="{Binding IsMappingEnabled, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource BoolToVisConverter}}">
+                    <telerik:RadNavigationViewItem.Icon>
+                        <telerik:RadGlyph Glyph="&#xe701;" FontSize="25" Margin="2,0,0,0"/>
+                    </telerik:RadNavigationViewItem.Icon>
+                </telerik:RadNavigationViewItem>
+            </telerik:RadNavigationView.Items>
+            <telerik:RadDocking x:Name="radDocking"
+                                telerik:RadDocking.SerializationTag="RadDocking"
+                                ElementLoaded="radDocking_ElementLoaded"
+                                AllowUnsafeMode="True"
+                                HasDocumentHost="False"
+                                PanesSource="{Binding Panes, UpdateSourceTrigger=PropertyChanged, NotifyOnSourceUpdated=True, Mode=TwoWay}"
+                                DataContext="{Binding}">
+                <telerik:RadDocking.DockingPanesFactory>
+                    <Util:CustomDockingPanesFactory/>
+                </telerik:RadDocking.DockingPanesFactory>
+                <telerik:RadSplitContainer InitialPosition="DockedLeft" telerik:DockingPanel.InitialSize="300,600">
+                    <telerik:RadPaneGroup Name="leftGroup" telerik:RadDocking.SerializationTag="leftGroup" IsContentPreserved="True" 
+                                      DataContext="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type telerik:RadDocking}}, Path=DataContext}">
+                    </telerik:RadPaneGroup>
+                </telerik:RadSplitContainer>
+                <telerik:RadSplitContainer InitialPosition="DockedRight" >
+                    <telerik:RadPaneGroup x:Name="rightGroup" telerik:RadDocking.SerializationTag="rightGroup" IsContentPreserved="True" 
+                                          DataContext="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type telerik:RadDocking}}, Path=DataContext}">
+                    </telerik:RadPaneGroup>
+                </telerik:RadSplitContainer>
+                <telerik:RadSplitContainer InitialPosition="DockedBottom">
+                    <telerik:RadPaneGroup x:Name="bottomGroup" telerik:RadDocking.SerializationTag="bottomGroup" IsContentPreserved="True"
+                                          DataContext="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type telerik:RadDocking}}, Path=DataContext}">
+                    </telerik:RadPaneGroup>
+                </telerik:RadSplitContainer>
+            </telerik:RadDocking>
+        </telerik:RadNavigationView>
+    </Grid>
+</telerik:RadWindow>

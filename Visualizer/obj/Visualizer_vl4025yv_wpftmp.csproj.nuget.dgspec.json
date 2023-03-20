@@ -1,0 +1,159 @@
+{
+  "format": 1,
+  "restore": {
+    "C:\\Users\\daniels\\source\\repos\\Visualizer\\Visualizer\\Visualizer.csproj": {}
+  },
+  "projects": {
+    "C:\\Users\\daniels\\source\\repos\\Visualizer\\Visualizer\\Visualizer.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\daniels\\source\\repos\\Visualizer\\Visualizer\\Visualizer.csproj",
+        "projectName": "Visualizer",
+        "projectPath": "C:\\Users\\daniels\\source\\repos\\Visualizer\\Visualizer\\Visualizer.csproj",
+        "packagesPath": "C:\\Users\\daniels\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\daniels\\source\\repos\\Visualizer\\Visualizer\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Progress\\ToolboxNuGetPackages",
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\daniels\\source\\repos\\Visualizer\\NuGet.Config",
+          "C:\\Users\\daniels\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\DevExpress 19.2.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Telerik UI for WPF.config"
+        ],
+        "originalTargetFrameworks": [
+          "netcoreapp3.1"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {},
+          "https://nuget.telerik.com/nuget": {}
+        },
+        "frameworks": {
+          "netcoreapp3.1": {
+            "targetAlias": "netcoreapp3.1",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netcoreapp3.1": {
+          "targetAlias": "netcoreapp3.1",
+          "dependencies": {
+            "Microsoft.Maps.MapControl.WPF": {
+              "target": "Package",
+              "version": "[1.0.0.3, )"
+            },
+            "Microsoft.Office.Interop.Word": {
+              "target": "Package",
+              "version": "[15.0.4797.1003, )"
+            },
+            "Nancy": {
+              "target": "Package",
+              "version": "[2.0.0, )"
+            },
+            "System.Drawing.Common": {
+              "target": "Package",
+              "version": "[4.7.0, )"
+            },
+            "Telerik.Windows.Controls.Data.for.Wpf": {
+              "target": "Package",
+              "version": "[2020.3.915, )"
+            },
+            "Telerik.Windows.Controls.Docking.for.Wpf": {
+              "target": "Package",
+              "version": "[2020.3.915, )"
+            },
+            "Telerik.Windows.Controls.FileDialogs.for.Wpf": {
+              "target": "Package",
+              "version": "[2020.3.915, )"
+            },
+            "Telerik.Windows.Controls.Navigation.for.Wpf": {
+              "target": "Package",
+              "version": "[2020.3.915, )"
+            },
+            "Telerik.Windows.Controls.for.Wpf": {
+              "target": "Package",
+              "version": "[2020.3.915, )"
+            },
+            "Telerik.Windows.Themes.Crystal.for.Wpf": {
+              "target": "Package",
+              "version": "[2020.3.915, )"
+            },
+            "Telerik.Windows.Themes.Expression_Dark.for.Wpf": {
+              "target": "Package",
+              "version": "[2020.3.915, )"
+            },
+            "Telerik.Windows.Themes.Fluent.for.Wpf": {
+              "target": "Package",
+              "version": "[2020.3.915, )"
+            },
+            "Telerik.Windows.Themes.Green.for.Wpf": {
+              "target": "Package",
+              "version": "[2020.3.915, )"
+            },
+            "Telerik.Windows.Themes.Office2013.for.Wpf": {
+              "target": "Package",
+              "version": "[2020.3.915, )"
+            },
+            "Telerik.Windows.Themes.Office_Black.for.Wpf": {
+              "target": "Package",
+              "version": "[2020.3.915, )"
+            },
+            "Telerik.Windows.Themes.Office_Blue.for.Wpf": {
+              "target": "Package",
+              "version": "[2020.3.915, )"
+            },
+            "Telerik.Windows.Themes.Office_Silver.for.Wpf": {
+              "target": "Package",
+              "version": "[2020.3.915, )"
+            },
+            "Telerik.Windows.Themes.Summer.for.Wpf": {
+              "target": "Package",
+              "version": "[2020.3.915, )"
+            },
+            "Telerik.Windows.Themes.Transparent.for.Wpf": {
+              "target": "Package",
+              "version": "[2020.3.915, )"
+            },
+            "Telerik.Windows.Themes.Vista.for.Wpf": {
+              "target": "Package",
+              "version": "[2020.3.915, )"
+            },
+            "Telerik.Windows.Themes.VisualStudio2019.for.Wpf": {
+              "target": "Package",
+              "version": "[2020.3.915, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            },
+            "Microsoft.WindowsDesktop.App.WPF": {
+              "privateAssets": "none"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.101\\RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}
