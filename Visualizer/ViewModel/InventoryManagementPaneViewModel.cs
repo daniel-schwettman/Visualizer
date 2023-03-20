@@ -681,6 +681,7 @@ namespace Visualizer.ViewModel
             catch (Exception exception)
             {
                 //Logger.LogException(exception, "MicroZoneAssetLayoutViewModel.MicroZone_MicroZoneLocked Failure");
+                // a new comment
             }
         }
 
