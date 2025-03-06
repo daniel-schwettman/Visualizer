@@ -19,6 +19,7 @@ using Visualizer.Threading;
 using Visualizer.Util;
 using System.Drawing.Imaging;
 using Microsoft.Office.Interop.Word;
+using Telerik.Windows.Controls.Slider;
 
 namespace Visualizer.ViewModel
 {
@@ -207,6 +208,7 @@ namespace Visualizer.ViewModel
 
                     string response = await this._dataManager.AddOrEditMicroZone(newMzone);
 
+                    SubscribeToMicroZoneEvents(newMzone);
                     this.MicroZones.Add(newMzone);
                     OnPropertyChanged("MicroZones");
                 }
@@ -221,12 +223,17 @@ namespace Visualizer.ViewModel
 
         private void UpdateData()
         {
+
+            //update the mZones first (any height, width, name changes, etc. will show up first)
+            LoadMicroZones();
+
+            //now clear out the tags in the mZone and update to show the most recent ones
             foreach (MicroZoneViewModel mZoneVM in this.MicroZones)
             {
                 mZoneVM.Assets.Clear();
                 foreach (TagResult tag in this._dataManager.MostRecentTags)
                 {
-                    if (tag.MZone1 == mZoneVM.TagAssociationNumber)
+                    if (tag.MZone1.ToUpper() == mZoneVM.TagAssociationNumber.ToUpper())
                     {
                         AssetViewModel vm = new AssetViewModel()
                         {
@@ -333,66 +340,6 @@ namespace Visualizer.ViewModel
                         }
 
                         this.ImageSource = bitmapImage;
-
-                        List<MicroZoneResult> mZoneResults = this._dataManager.GetMicroZones();
-
-                        foreach (MicroZoneResult result in mZoneResults)
-                        {
-                            if (result.DepartmentId == this.CurrentDepartment.DepartmentId)
-                            {
-                                // Get the current screen resolution
-                                double screenWidth = SystemParameters.PrimaryScreenWidth;
-                                double screenHeight = SystemParameters.PrimaryScreenHeight;
-
-                                MicroZoneViewModel mZoneVM = new MicroZoneViewModel(null, result.MicroZoneX, result.MicroZoneY, result.MicroZoneWidth, result.MicroZoneHeight, false)
-                                {
-                                    DepartmentId = result.DepartmentId,
-                                    MicroZoneId = result.MicroZoneId.ToString(),
-                                    Name = result.MicroZoneName,
-                                    LocationX = result.MicroZoneX,
-                                    LocationY = result.MicroZoneY,
-                                    CenterX = result.MicroZoneX + (result.MicroZoneWidth / 2),
-                                    CenterY = result.MicroZoneY + (result.MicroZoneHeight / 2),
-                                    OriginalCenterX = result.MicroZoneX + (result.MicroZoneWidth / 2),
-                                    OriginalCenterY = result.MicroZoneY + (result.MicroZoneHeight / 2),
-                                    Height = result.MicroZoneHeight,
-                                    Width = result.MicroZoneWidth,
-                                    IsLocked = result.IsLocked,
-                                    TagAssociationNumber = result.TagAssociationNumber,
-                                    RawId = result.RawId
-                                };
-
-                                //if (screenWidth != this.CurrentDepartment.ScreenWidth  || screenHeight != this.CurrentDepartment.ScreenHeight)
-                                //{
-                                //    double originalX = mZoneVM.LocationX;
-                                //    double originalY = mZoneVM.LocationY;
-
-                                //    double originalWidth = mZoneVM.Width;
-                                //    double originalHeight = mZoneVM.Height;
-
-                                //    mZoneVM.LocationX = (originalX) * (screenWidth / this.CurrentDepartment.ScreenWidth);
-                                //    mZoneVM.LocationY = (originalY) * (screenHeight / this.CurrentDepartment.ScreenHeight);
-
-                                //    mZoneVM.Width = originalWidth * (screenWidth / this.CurrentDepartment.ScreenWidth);
-                                //    mZoneVM.Height = originalHeight * (screenHeight / this.CurrentDepartment.ScreenHeight);
-                                //}
-
-                                if (mZoneVM.IsLocked)
-                                {
-                                    mZoneVM.LockUnlockText = "Unlock";
-                                    mZoneVM.LockUnlockPath = "Red";
-                                }
-                                else
-                                {
-                                    mZoneVM.LockUnlockText = "Lock";
-                                    mZoneVM.LockUnlockPath = "Green";
-                                }
-
-                                SubscribeToMicroZoneEvents(mZoneVM);
-                                this.MicroZones.Add(mZoneVM);
-                            }
-                        }
-
                         UpdateData();
                         this.SelectedDepartment.IsLastLoaded = true;
                         this._dataManager.UpdateDepartment(this.SelectedDepartment);
@@ -401,6 +348,50 @@ namespace Visualizer.ViewModel
                     {
                         MessageBox.Show($"Unable to load file: {this.CurrentDepartment.FilePath}", "Error", MessageBoxButton.OK);
                     }
+                }
+            }
+        }
+
+        private void LoadMicroZones()
+        {
+            List<MicroZoneResult> mZoneResults = this._dataManager.GetMicroZones();
+            this.MicroZones.Clear();
+
+            foreach (MicroZoneResult result in mZoneResults)
+            {
+                if (result.DepartmentId == this.CurrentDepartment.DepartmentId)
+                {
+                    MicroZoneViewModel mZoneVM = new MicroZoneViewModel(null, result.MicroZoneX, result.MicroZoneY, result.MicroZoneWidth, result.MicroZoneHeight, false)
+                    {
+                        DepartmentId = result.DepartmentId,
+                        MicroZoneId = result.MicroZoneId.ToString(),
+                        Name = result.MicroZoneName,
+                        LocationX = result.MicroZoneX,
+                        LocationY = result.MicroZoneY,
+                        CenterX = result.MicroZoneX + (result.MicroZoneWidth / 2),
+                        CenterY = result.MicroZoneY + (result.MicroZoneHeight / 2),
+                        OriginalCenterX = result.MicroZoneX + (result.MicroZoneWidth / 2),
+                        OriginalCenterY = result.MicroZoneY + (result.MicroZoneHeight / 2),
+                        Height = result.MicroZoneHeight,
+                        Width = result.MicroZoneWidth,
+                        IsLocked = result.IsLocked,
+                        TagAssociationNumber = result.TagAssociationNumber,
+                        RawId = result.RawId
+                    };
+
+                    if (mZoneVM.IsLocked)
+                    {
+                        mZoneVM.LockUnlockText = "Unlock";
+                        mZoneVM.LockUnlockPath = "Red";
+                    }
+                    else
+                    {
+                        mZoneVM.LockUnlockText = "Lock";
+                        mZoneVM.LockUnlockPath = "Green";
+                    }
+
+                    SubscribeToMicroZoneEvents(mZoneVM);
+                    this.MicroZones.Add(mZoneVM);
                 }
             }
         }

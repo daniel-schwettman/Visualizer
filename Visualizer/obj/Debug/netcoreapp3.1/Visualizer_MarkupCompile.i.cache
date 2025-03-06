@@ -8,12 +8,12 @@ C:\Users\danie\source\Workspaces\LRNI\Visualizer\Visualizer\obj\Debug\netcoreapp
 Visualizer
 none
 false
-DEBUG;TRACE;DEBUG;NETCOREAPP;NETCOREAPP3_1;
+DEBUG;TRACE;DEBUG;NETCOREAPP;NETCOREAPP3_1;;NETCOREAPP3_0_OR_GREATER;NETCOREAPP3_1_OR_GREATER
 C:\Users\danie\source\Workspaces\LRNI\Visualizer\Visualizer\App.xaml
 101516049914
 11073913663
 85-248885317
-210-1079575676
+2091317200472
 generic.xaml;MainWindow.xaml;View\ApplicationSettingsPaneView.xaml;View\AssetManagementPaneView.xaml;View\AssetUserControl.xaml;View\DailyPaneView.xaml;View\InventoryManagementPaneView.xaml;View\MappingPaneView.xaml;View\MicroZoneUserControl.xaml;View\SystemReportingPaneView.xaml;
 
 False

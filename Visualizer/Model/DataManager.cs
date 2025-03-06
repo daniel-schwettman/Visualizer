@@ -80,9 +80,9 @@
 			//this._cartItems = GetCarts();
 			this._mZoneItems = GetMicroZones();
 
-			Task.Factory.StartNew(new Action(this.UpdateDataThread));
+            Task.Factory.StartNew(new Action(this.UpdateDataThread));
 
-		}
+        }
 
 		public void AddTag(string[] tagNameRequest)
 		{
