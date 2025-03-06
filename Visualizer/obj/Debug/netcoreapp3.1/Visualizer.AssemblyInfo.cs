@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Visualizer")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+9c7201ec8df4a1cc7ecd481abf253d83f1bdf80a")]
 [assembly: System.Reflection.AssemblyProductAttribute("Visualizer")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Visualizer")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

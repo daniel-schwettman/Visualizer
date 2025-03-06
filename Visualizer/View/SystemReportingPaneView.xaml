@@ -49,13 +49,13 @@
             </telerik:RadGridView.ContextMenu>
             <telerik:RadGridView.Columns>
                 <telerik:GridViewDataColumn DataMemberBinding="{Binding Name, UpdateSourceTrigger=PropertyChanged}" Header="Tag Name" Width="142"/>
-                <telerik:GridViewDataColumn DataMemberBinding="{Binding Id, UpdateSourceTrigger=PropertyChanged}" Header="Tag ID" Width="175"/>
+                <telerik:GridViewDataColumn DataMemberBinding="{Binding Id, UpdateSourceTrigger=PropertyChanged}" Header="Tag ID" Width="100"/>
                 <telerik:GridViewDataColumn DataMemberBinding="{Binding LastUpdatedOnServer, UpdateSourceTrigger=PropertyChanged}" Header="Updated On Server" Width="200"/>
-                <telerik:GridViewDataColumn DataMemberBinding="{Binding Latitude, UpdateSourceTrigger=PropertyChanged}" Header="Latitude" Width="150"/>
-                <telerik:GridViewDataColumn DataMemberBinding="{Binding Longitude, UpdateSourceTrigger=PropertyChanged}" Header="Longitude" Width="150"/>
-                <telerik:GridViewDataColumn DataMemberBinding="{Binding Temperature, UpdateSourceTrigger=PropertyChanged, StringFormat={}}" Header="Temperature" Width="150"/>
-                <telerik:GridViewDataColumn DataMemberBinding="{Binding Humidity, UpdateSourceTrigger=PropertyChanged}" Header="Humidity" Width="150"/>
-                <telerik:GridViewDataColumn DataMemberBinding="{Binding Operation, UpdateSourceTrigger=PropertyChanged}" Header="Operation" Width="150"/>
+                <telerik:GridViewDataColumn DataMemberBinding="{Binding Latitude, UpdateSourceTrigger=PropertyChanged}" Header="Latitude" Width="100"/>
+                <telerik:GridViewDataColumn DataMemberBinding="{Binding Longitude, UpdateSourceTrigger=PropertyChanged}" Header="Longitude" Width="100"/>
+                <telerik:GridViewDataColumn DataMemberBinding="{Binding Temperature, UpdateSourceTrigger=PropertyChanged, StringFormat={}}" Header="Temp." Width="75"/>
+                <telerik:GridViewDataColumn DataMemberBinding="{Binding Humidity, UpdateSourceTrigger=PropertyChanged}" Header="Humidity" Width="100"/>
+                <telerik:GridViewDataColumn DataMemberBinding="{Binding Operation, UpdateSourceTrigger=PropertyChanged}" Header="Operation" Width="100"/>
 
                 <telerik:GridViewDataColumn DataMemberBinding="{Binding StatusCode, UpdateSourceTrigger=PropertyChanged}" Width="120" ToolTipService.ShowDuration="12000">
                     <telerik:GridViewDataColumn.Header>
@@ -91,8 +91,8 @@
                         </TextBlock>
                     </telerik:GridViewDataColumn.Header>
                 </telerik:GridViewDataColumn>
-                <telerik:GridViewDataColumn DataMemberBinding="{Binding Battery, UpdateSourceTrigger=PropertyChanged}" Header="Battery" Width="120"/>
-                <telerik:GridViewDataColumn DataMemberBinding="{Binding MZone1Rssi, UpdateSourceTrigger=PropertyChanged}" Header="Rssi" Width="120"/>
+                <telerik:GridViewDataColumn DataMemberBinding="{Binding Battery, UpdateSourceTrigger=PropertyChanged}" Header="Battery" Width="100"/>
+                <telerik:GridViewDataColumn DataMemberBinding="{Binding MZone1Rssi, UpdateSourceTrigger=PropertyChanged}" Header="Rssi" Width="100"/>
 
                 <!--Tensar needs to see the Mzone name and number in its list, LRNI just needs to see Mzone1 and 2 values-->
                 <!--<telerik:GridViewDataColumn DataMemberBinding="{Binding MZone1Name, UpdateSourceTrigger=PropertyChanged}" Header=" Current MZone Name" Width="150"/>
@@ -103,7 +103,7 @@
                 <telerik:GridViewDataColumn DataMemberBinding="{Binding MZone1, UpdateSourceTrigger=PropertyChanged}" Header=" Current MZone" Width="150"/>
                 <telerik:GridViewDataColumn DataMemberBinding="{Binding MZone2, UpdateSourceTrigger=PropertyChanged}" Header="Previous MZone" Width="150"/>
                 <telerik:GridViewDataColumn DataMemberBinding="{Binding SequenceNumber, UpdateSourceTrigger=PropertyChanged}" Header="Sequence Number" Width="150"/>
-                <telerik:GridViewDataColumn DataMemberBinding="{Binding ReaderId, UpdateSourceTrigger=PropertyChanged}" Header="Reader ID" Width="200"/>
+                <telerik:GridViewDataColumn DataMemberBinding="{Binding ReaderId, UpdateSourceTrigger=PropertyChanged}" Header="Reader ID" Width="150"/>
             </telerik:RadGridView.Columns>
         </telerik:RadGridView>
     </Grid>
